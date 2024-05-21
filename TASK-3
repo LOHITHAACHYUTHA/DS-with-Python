@@ -1,0 +1,55 @@
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load CSV file into a Pandas DataFrame
+df = pd.read_csv('C:\\Users\\CHITTURI SRINIVAS\\Downloads\\householdtask3.csv', encoding='latin1')
+df_subset = df.head(10)
+
+# Reduce the figure size to a reasonable value
+plt.figure(figsize=(8, 5))
+
+# Plotting with corrected column name
+plt.bar(df_subset['age'], df_subset['income'], color='skyblue', label='income')
+
+# bargraph plot
+# Add labels and title
+plt.xlabel('age')
+plt.ylabel('income')
+plt.title('Bar Chart of age vs. income')
+
+# Add legend
+plt.legend()
+
+# Rotate x-axis labels if necessary
+plt.xticks(rotation=45)
+
+# Adjust layout to prevent clipping of labels
+plt.tight_layout()
+
+# Show plot
+plt.show()
+
+
+#line chart plot
+plt.figure(figsize=(8, 5))
+plt.plot(df['eqv_income'], df['eqv_exp'], marker='o', color='skyblue', linestyle='-', label='eqv_exp')
+
+# Add labels and title
+plt.title('eqv_exp Over eqv_income')
+plt.xlabel('eqv_income')
+plt.ylabel('eqv_exp')
+
+# Add legend
+plt.legend()
+
+# Add gridlines
+plt.grid(True)
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45)
+# Adjust layout
+plt.tight_layout()
+
+# Show plot
+plt.show()
