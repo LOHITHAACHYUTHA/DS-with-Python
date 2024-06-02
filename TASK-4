@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+df = pd.read_csv('C:\\Users\\CHITTURI SRINIVAS\\Downloads\\USvideos.csv')
+# Display the first few rows of the dataset
+print("First few rows of the dataset:")
+print(df.head())
+print(df.shape)
+df=df.drop_duplicates()
+print(df.shape)
+# Summary statistics
+print("\nSummary statistics:")
+print(df.describe())
+print(df.info())
+columns_to_remove=['thumbnail_link' ,'description']
+df=df.drop(columns=columns_to_remove)
+print(df.info())
+df['publish_time'] = pd.to_datetime(df['publish_time'])
+df['publish_date'] = df['publish_time'].dt.date
+video_count_by_date = df.groupby('publish_date').size()
+plt.figure(figsize = (6,6))
+sns.lineplot(data=video_count_by_date)
+plt.title("videos published over time")
+plt.xlabel("publish date")
+plt.ylabel("number of videos")
+plt.xticks (rotation = 45)
+plt.show()
+# Distribution of numerical variables: Histograms
+numerical_columns = ['views', 'likes', 'dislikes', 'comment_count']
+df[numerical_columns].hist(bins=30, figsize=(10, 10))
+plt.suptitle('Distribution of Numerical Variables', fontsize=20)
+plt.show()
+
+# Identify outliers: Box plots
+plt.figure(figsize=(10, 10))
+for i, column in enumerate(numerical_columns):
+ plt.subplot(2, 2, i + 1)
+ sns.boxplot(data=df, y=column)
+ plt.title(f'Box plot of {column}')
+plt.tight_layout()
+plt.show()
+# Correlation matrix
+correlation_matrix = df[numerical_columns].corr()
+# Correlation matrix heatmap
+plt.figure(figsize=(15, 10))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix Heatmap', fontsize=20)
+plt.show()
+
